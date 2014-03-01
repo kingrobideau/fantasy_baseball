@@ -1,0 +1,2 @@
+playermart();
+auctionManager();

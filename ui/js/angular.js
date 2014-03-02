@@ -174,16 +174,32 @@ fantasy.factory('projections', function($http) {
 	factory.getData = function() {
 		var steamerJo = {};
 		$.ajax({
+			type: 'GET',
 			dataType: "json",
-			url: "../php/median_player_value.php",
-			success: function(data) {
-				console.log(data);
+			url: "../php/steamer.php",
+			success: function(result) {
+				console.log(result);
+			},
+			error: function(request, error) {
+				console.log("Error message: " + error);
 			}
-		})
+		});
 		steamerJo = data;
 		return steamerJo;
 	}
 	return factory;
+});
+
+$.ajax({
+	type: 'GET',
+	url: "php/mysqli_connect.php",
+	success: function(data) {
+		console.log("Success!");
+		console.log(data);
+	},
+    error: function (jqXHR, textStatus, errorThrown) {
+        console.log("jqXHR: " + jqXHR.status + "\ntextStatus: " + textStatus + "\nerrorThrown: " + errorThrown);
+    }
 });
 
 /*
@@ -210,7 +226,9 @@ controllers.RosterController = function($scope) {
 }
 
 controllers.ScatterplotController = function($scope, projections) {
+    
     $scope.myData = [[1,1], [2,2], [4,3], [1,2]];
+    //$scope.pro = projections.getData();
 }
 
 controllers.MeterController = function($scope, projections) {

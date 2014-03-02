@@ -133,8 +133,8 @@ class fangraphs_scraper():
                 """
         self.cursor.execute(insert, values)
         self.insert_count += 1
-        if self.insert_count >= 1000:
-            print "Committing 1,000 records"
+        if self.insert_count > 100:
+            print "Committing 100 records"
             self.db.commit()
             self.insert_count=0
 

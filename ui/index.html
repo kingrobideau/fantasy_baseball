@@ -30,10 +30,15 @@
 
 	<!--Transparent background-->
 
+<<<<<<< HEAD
 	<div class="col-md-11 col-centered" ng-controller="DraftController">
 		
 		<!--Auction Spotlight-->
 		<div class="well">
+=======
+		<!--header-->
+		<div class="well" style="opacity: .9">
+>>>>>>> FETCH_HEAD
 			<div class="row">
 	        	<div class="col-md-2">
 	        		<categorybubbles player="selectedPlayer"></categorybubbles>
@@ -88,7 +93,18 @@
 		        	>Draft</button>
 			    </div>
 			</div>
+<<<<<<< HEAD
 		</div><!--End Auction Spotlight-->
+=======
+	    </div>
+
+	    <!--body-->
+	    <div class="well" style="opacity: .9"><div class="row">
+
+		    <!--roster div-->
+		    <div class="col-md-1">
+		    </div>
+>>>>>>> FETCH_HEAD
 
 		<div class="well"><div class='row'>
 			<!--Roster-->
@@ -162,6 +178,7 @@
 				</div>
 			</div><!--End dropoff chart-->
 
+<<<<<<< HEAD
 		</div></div><!--End chart well-->
 
 	</div><!--End main body div-->
@@ -170,5 +187,31 @@
 	<script type="text/javascript" src="js/directive.js"></script>
 	<script type="text/javascript" src="js/controller.js"></script>
 	<script type="text/javascript" src="js/factory.js"></script>
+=======
+				<!--<div ng-controller="PlayerController">
+			    	<table class='table table-striped table-hover'>
+			    		<tbody>
+			    			<thead>
+			    				<th>Name</th>
+			    				<th>Value</th>
+			    			</thead>
+			    			<tr ng-repeat="p in players">
+			    				<td> {{ p.name }} </td>
+			    				<td> {{ p.value }} </td>
+			    			</tr>
+			    		</tbody>
+			    	</table>
+			    </div>-->
+			<div ng-controller="ScatterplotController">
+			    <scatterplot chart-data="myData"  ></bars-chart>
+			</div>
+
+			<div class="col-md-3">
+			</div>
+			    
+		</div></div>
+		<script type="text/javascript" src="js/angular.js"></script>
+	</div>
+>>>>>>> FETCH_HEAD
 	</body>
 </html>

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 CREATE SCHEMA `fantasy_commander` ;
 
+=======
+>>>>>>> FETCH_HEAD
 CREATE  TABLE `fantasy_commander`.`fangraphs_batter_standard` (
   `player_id` INT NOT NULL ,
   `name` VARCHAR(45) NULL ,
@@ -16,17 +19,27 @@ CREATE  TABLE `fantasy_commander`.`fangraphs_batter_standard` (
   `sb` INT(4) NULL ,
   `bb_pct` VARCHAR(6) NULL ,
   `k_pct` VARCHAR(6) NULL ,
+<<<<<<< HEAD
   `iso` DECIMAL(3,3) NULL ,
   `babip` DECIMAL(3,3) NULL ,
   `avg` DECIMAL(3,3) NULL ,
   `obp` DECIMAL(3,3) NULL ,
   `slg` DECIMAL(3,3) NULL ,
   `woba` DECIMAL(3,3) NULL ,
+=======
+  `iso` DECIMAL(1,3) NULL ,
+  `babip` DECIMAL(1,3) NULL ,
+  `avg` DECIMAL(1,3) NULL ,
+  `obp` DECIMAL(1,3) NULL ,
+  `slg` DECIMAL(1,3) NULL ,
+  `woba` DECIMAL(1,3) NULL ,
+>>>>>>> FETCH_HEAD
   `wrc_plus` INT(4) NULL ,
   `bsr` DECIMAL(3,1) NULL ,
   `off` DECIMAL(3,1) NULL ,
   `def` DECIMAL(3,1) NULL ,
   `war` DECIMAL(3,1) NULL ,
+<<<<<<< HEAD
   PRIMARY KEY (`player_id`, `year`, `team`) );
 
 CREATE  TABLE `fantasy_commander`.`league` (
@@ -73,3 +86,6 @@ CREATE  TABLE `fantasy_commander`.`headshot_file` (
   `file` VARCHAR(45) NULL ,
   PRIMARY KEY (`player_id`) );
 
+=======
+  PRIMARY KEY (`player_id`, `year`, `team`) );
+>>>>>>> FETCH_HEAD

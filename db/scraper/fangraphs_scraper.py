@@ -72,14 +72,7 @@ class fangraphs_scraper():
                 team = "N/A"
 
                 if (pos == "P" and self.player_type =="pitcher") or (pos != "P" and self.player_type == "batter"): #INPUT CHECK: player_type
-<<<<<<< HEAD:db/fangraphs_scraper.py
-                    try:
-                        self.scrape_player_page(path, team, name, pos)
-                    except:
-                        print "Couldn't scrape page"
-=======
                     self.scrape_player_page(path, team, name, pos)
->>>>>>> FETCH_HEAD:scraper/fangraphs_scraper.py
 
     #---crawl through AL or NL teams
     def crawl_teams(self):
@@ -133,17 +126,6 @@ class fangraphs_scraper():
 
     #insert data
     def insert(self, values):
-<<<<<<< HEAD:db/fangraphs_scraper.py
-        if self.player_type == 'batter':
-            self.insert_batter(values)
-        elif self.player_type == 'pitcher':
-            self.insert_pitcher(values)
-        else:
-            print("Invalid player type")
-            
-    def insert_batter(self, values):
-=======
->>>>>>> FETCH_HEAD:scraper/fangraphs_scraper.py
         insert = """
                 INSERT INTO fangraphs_batter_standard
                 (player_id, name, pos, dob, current_team, year, team, g, pa, hr, r, rbi, sb, bb_pct, k_pct, iso, babip, avg, obp, slg, woba, wrc_plus, bsr, off, def, war)
@@ -151,26 +133,10 @@ class fangraphs_scraper():
                 """
         self.cursor.execute(insert, values)
         self.insert_count += 1
-        if self.insert_count >= 1000:
-            print "Committing 1,000 records"
+        if self.insert_count > 100:
+            print "Committing 100 records"
             self.db.commit()
             self.insert_count=0
-<<<<<<< HEAD:db/fangraphs_scraper.py
-
-    def insert_pitcher(self, values):
-        insert = """
-                INSERT INTO fangraphs_pitcher_standard
-                (player_id, name, pos, dob, current_team, year, team, w, l, era, g, gs, cg, sho, sv, hld, bs, ip, tbf, h, r, er, hr, bb, ibb, hbp, wp, bk, so)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-                """
-        self.cursor.execute(insert, values)
-        self.insert_count += 1
-        if self.insert_count >= 1000:
-            print "Committing 1,000 records"
-            self.db.commit()
-            self.insert_count=0
-=======
->>>>>>> FETCH_HEAD:scraper/fangraphs_scraper.py
 
     #---kickoff scraper---
     def scrape(self):
@@ -187,11 +153,7 @@ class fangraphs_scraper():
         print("Finished scraping")
 #--------------------------------------------------
 
-<<<<<<< HEAD:db/fangraphs_scraper.py
-scraper = fangraphs_scraper("alpha", "all","pitcher", "2013", "standard")
-=======
 scraper = fangraphs_scraper("alpha", "all","batter", "2013", "standard")
->>>>>>> FETCH_HEAD:scraper/fangraphs_scraper.py
 scraper.scrape()
 
 

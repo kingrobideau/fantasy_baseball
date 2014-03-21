@@ -3,133 +3,172 @@
 		<meta charset="utf-8">
 		<title>Fantasy Baseball Draft</title>
 		<script type="text/javascript" src="lib/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="lib/d3.min.js"></script>
-		<script type="text/javascript" src="lib/underscore-min.js"></script>
-		<script type="text/javascript" src="lib/highcharts.js"></script>
-		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
+
 		<script type="text/javascript" src="lib/angularjs-1.2.13-min.js"></script>
-		<script type="text/javascript" src="js/stock_d3_charts.js"></script>
+		<script type="text/javascript" src="lib/angular-route.js"></script>
+
+		<script type="text/javascript" src="lib/d3.min.js"></script>
+
+		<script type="text/javascript" src="lib/highcharts/highcharts.js"></script>
+		<script type="text/javascript" src="lib/highcharts/highcharts-more.js"></script>
+		<script type="text/javascript" src="lib/highcharts/funnel.js"></script>
+		<script type="text/javascript" src="lib/highcharts/highcharts-ng.js"></script>
+		<script src="http://github.highcharts.com/master/modules/no-data-to-display.src.js"></script>
+
+		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
+
+		<script type="text/javascript" src="lib/underscore-min.js"></script>
+
 		<script type="text/javascript" src="js/transform.js"></script>
+		<script type="text/javascript" src="js/stock_d3_charts.js"></script>
 		<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"></link>
 		<link rel="stylesheet" type="text/css" href="css/style.css"></link>	
 	</head>
 
 	<body>
-		<img src="img/TurnerField2.jpg" class="background_image"></img>
-	<div class="row" style="background: white; opacity: .7">
-		<div class="col-md-3 col-centered">
-			<h1>Fantasy Commander</h3>
-		</div>
-	</div>
-	<div class="span6" style="margin-top: 20px">
+		<img src="img/background.jpg" class="background_image"></img>
 
-		<!--header-->
-		<div class="well control-panel">
+	<!--Transparent background-->
+
+	<div class="col-md-11 col-centered" ng-controller="DraftController">
+		
+		<!--Auction Spotlight-->
+		<div class="well">
 			<div class="row">
-	        	<div class="col-md-1">HR</div>
-	        	<div class="col-md-1">R</div>
-	        	<div class="col-md-1">RBI</div>
-	        	<div class="col-md-1">SB</div>
-	        	<div class="col-md-1">AVG</div>
-	        	<div class="col-md-1">
-					<img id='playerImg'></img>
-				</div>
-	        	<div class="col-md-1" ng-controller="MeterController">
-	        		<auctionmeter chart-data="myData"></auctionmeter>
-	        	</div>
-	        	<div class="col-md-1" ng-controller="MeterController">
-	        		<auctionmeter chart-data="myData"></auctionmeter>
-	        	</div>
-	        	<div class="col-md-1" ng-controller="MeterController">
-	        		<auctionmeter chart-data="myData"></auctionmeter>
-	        	</div>
-	        	<div class="col-md-1" ng-controller="MeterController">
-	        		<auctionmeter chart-data="myData"></auctionmeter>
-	        	</div>
-	        	<div class="col-md-1" ng-controller="MeterController">
-	        		<auctionmeter chart-data="myData"></auctionmeter>
+	        	<div class="col-md-2">
+	        		<categorybubbles player="selectedPlayer"></categorybubbles>
 	        	</div>
 	        </div>
+	        <div class="row">
+	        	<div class="col-md-1"></div>
+	        	<div class="col-md-3">
+	        		<div class="row">
+						<h1>{{selectedPlayer.name}}</h3>
+					</div>
+	        		<div class="row">
+	        			<div class="col-md-4">
+							<img id='playerImg' ng-src='img/headshots/img/{{selectedPlayer.headshot_file}}'></img>
+						</div>
+						<div class="col-md-8">
+							<div id='categoryValue' ng-repeat='c in selectedCategoryValue'>{{ c.name }}: {{ c.value }}</div>
+							</tr>
+						</div>
+					</div>
+				</div>
+	        	<div class="col-md-6">
+	        		<div class='col-md-4'>
+	        			<auctionmeter data="steamerData" name="steamerName" cost="selectedCost" value="selectedPlayer.steamer_value"></auctionmeter>
+	        		</div>
+	        		<div class='col-md-4'>
+	        			<auctionmeter data="zipsData" name="zipsName" cost="selectedCost" value="selectedPlayer.zips_value"></auctionmeter>
+	        		</div>
+	        		<div class='col-md-4'>
+	        			<auctionmeter data="fansData" name="fansName" cost="selectedCost" value="selectedPlayer.fans_value"></auctionmeter>
+	        		</div>
+	        	</div>
+	        </div>
+	        <hr />
 	       	<div class="row">
 			    <div class="col-md-6 col-centered">
-		        	Search <input class="margin-20"></input>
-		        	$ <input class="margin-20" style="width: 50"></input>
-		        	Roster <select class="margin-20" style="width: 150"></select>
-		        	<button class="btn btn-success" style="width: 150; height:50">Draft</button>
+		        	<label>Search</label>
+		        	<div class='green' style='display: inline-block'><input class="margin-20" ng-model="selectedPlayerName" ng-change="updateSelectedPlayer()"></div></input>
+		        	
+		        	<label>$</label>
+		        	<input class="margin-20 green" style="width: 50"
+		        		ng-model="selectedCost"></input>
+		        	
+		        	<label>Roster</label>
+		        	<select class="margin-20 green" style="width: 150"
+		        		ng-model="selectedRosterNameDraft">	
+		        		<option ng-repeat="r in rosterNames">{{r}}</option>
+		        	</select>
+		        	
+		        	<button class="btn btn-success" style="width: 150; height:50"
+		        		ng-click="draft()"
+		        	>Draft</button>
 			    </div>
 			</div>
-	    </div>
+		</div><!--End Auction Spotlight-->
 
-	    <!--body-->
-	    <div class="well"><div class="row">
-
-		    <!--roster div-->
-		    <div class="col-md-1">
-		    </div>
-
-	    	<div class="well" id="roster">
-		    	<div class="col-md-4" ng-controller="RosterController">
-		    		Roster: <select id="rosterSelect" ng-model="inRoster" ng-options="r for r in rosters"></select>
-		    		<hr />
-		    		<table>
+		<div class="well"><div class='row'>
+			<!--Roster-->
+			<div class='col-md-3'>
+				<div class='row'>
+		    		<label>Roster</label>
+		    		<select id="rosterSelect" class="green"
+		    			ng-model="selectedRosterNameAnalysis" 
+		    			ng-options="r for r in rosterNames"
+		    			ng-change="updateSelectedRosterAnalysis()"
+		    		></select>
+			    </div>
+			    <br />
+			    <div class='row'>
+		    		<table class='table'>
 		    			<tbody>
-		    				<tr ng-repeat="s in slots">
-		    					<td> {{ s }} </td>
-		    					<td> Empty </td> 	
+		    				<thead>
+		    					<th>Position </th>
+		    					<th>Name </th>
+		    					<th></th>
+		    				</thead>
+		    				<tr ng-repeat="player in selectedRosterAnalysis.batters">
+		    					<td>{{ player.pos }}</td>
+		    					<td>{{ player.name }}</td>
+		    					<td><img ng-src="img/headshots/img/{{player.headshot_file}}" height=48 width=32></img></td>
+		    				</tr>
+		    				<tr ng-repeat="player in selectedRosterAnalysis.pitchers">
+		    					<td>{{ player.pos }}</td>
+		    					<td>{{ player.name }}</td>
+		    					<td><img ng-src="img/headshots/img/{{player.headshot_file}}" height=48 width=32></img></td>
 		    				</tr>
 		    			</tbody>
 		    		</table>
-		    	</div>
-		    </div>
+			    </div><!--End row-->
+		    </div><!--End roster row-->
 
-	    	<div class="col-md-8">
+		   
+		    <div class='col-md-9'>
+	    		 <!--Chart Top Nav-->
+		    	<div class='row'>
+		    		<!--<div class='col-md-2'>
+		   				<h3>Remaining Players</h3>
+		   			</div>-->
+		   			<div class='col-md-8'>
+		   				<label ng-show="showDropoffChart">Position</label>
+		   				<select class="green" ng-model="dropoffPos" ng-show="showDropoffChart"style='margin: 0'>
+		   					<option ng-repeat="p in positions">{{ p }}</option>
+		   				</select>
+		   			</div>
+		   			<div class='col-md-4'>
+		   				<label>Positional Dropoff</label>
+		   				<input type="radio" name="selectedChart" value="Dropoff" ng-model="selectedChart" ng-change="updateShowHideCharts()"></input>
+				    	
+				    	<label>Roster Breakdown</label>
+				    	<input type="radio" name="selectedChart" value="Breakdown" ng-model="selectedChart" ng-change="updateShowHideCharts()"></input>
+				    </div>	
+		   		</div>
 
-	    		<div class="navbar navbar-default">
-	    			<div class="navbar-inner">
-		    			<ul class="nav navbar-nav">
-		    			 	<li><a>Table</a></li>
-		    			 	<li><a>Scatter</a></li>
-		    			</ul>
-		    			<ul class="nav navbar-nav navbar-right">
-		    			 	<li class="dropdown">
-		    			 		<a class="dropdown-toggle" data-toggle="dropdown">Position </a>
-		    			 		<ul class="dropdown-menu">
-		    			 			<li>C</li>
-		    						<li>1B</li>
-		    						<li>2B</li>
-		    			 		</ul>
-		    			 	</li>
-		    			</ul>
-	    			</div>
+		   		<!--Remaining Players: Cost-Value-->
+		    	<div class="row" ng-show='showDropoffChart'>
+			    	<div class="col-md-12">
+						<scatterplot batter-project="batterProject" pitcher-project="pitcherProject" pos='dropoffPos'></scatterplot>
+					</div> 
 				</div>
+				<!--Roster Breakdown-->
+			    <div class="row" ng-show='showRosterBreakdown'>
+		    		<div class='col=md-12'>
+			    		<rosterbreakdown data='rosterBreakdownDataBat' categories='batterCategories' id="batterBreakdownId" title="batterBreakdownTitle"></rosterbreakdown>
+			    		<rosterbreakdown data='rosterBreakdownDataPitch' categories='pitcherCategories' id="pitcherBreakdownId" title="pitcherBreakdownTitle"></rosterbreakdown>
+			    	</div>
+				</div>
+			</div><!--End dropoff chart-->
 
-				<!--<div ng-controller="PlayerController">
-			    	<table class='table table-striped table-hover'>
-			    		<tbody>
-			    			<thead>
-			    				<th>Name</th>
-			    				<th>Value</th>
-			    			</thead>
-			    			<tr ng-repeat="p in players">
-			    				<td> {{ p.name }} </td>
-			    				<td> {{ p.value }} </td>
-			    			</tr>
-			    		</tbody>
-			    	</table>
-			    </div>-->
+		</div></div><!--End chart well-->
 
-			    
-			<div ng-controller="ScatterplotController">
-			    <scatterplot chart-data="myData"  ></bars-chart>
-			</div>
-
-			<div class="col-md-3">
-			</div>
-			    
-		</div></div>
-
-		<script type="text/javascript" src="js/angular.js"></script>
-		<script type="text/javascript" src="js/global.js"></script>
-	</div>
+	</div><!--End main body div-->
+	<script type="text/javascript" src="js/function.js"></script>
+	<script type="text/javascript" src="js/module.js"></script>
+	<script type="text/javascript" src="js/directive.js"></script>
+	<script type="text/javascript" src="js/controller.js"></script>
+	<script type="text/javascript" src="js/factory.js"></script>
 	</body>
 </html>

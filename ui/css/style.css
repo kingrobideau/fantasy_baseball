@@ -12,6 +12,14 @@
 	height:50;
 }
 
+.black {
+  color: black;
+}
+
+.green {
+  color: #006633
+}
+
 .col-centered{
     float: none;
     margin: 0 auto;
@@ -19,7 +27,7 @@
 
 .control-panel {
   background: gray;
-  opacity: .9;
+  opacity: .8;
 }
 
 .full-opacity {
@@ -36,6 +44,10 @@
 
 #roster {
 	display: inline-block;
+}
+
+#categoryValue {
+  color: white;
 }
 
 .chart {
@@ -61,5 +73,16 @@
 }	
 
 h1 { 
-  color: green;
+  color: #66FF66;
+}
+
+label {
+  margin-left: 10px;
+}
+
+.well {
+  border: none;
+  opacity: .9;
+  color: white;
+  background: black;
 }
